@@ -16,15 +16,13 @@ namespace StudentManagement.Web.Pages.Students
 
         public async Task OnGet()
         {
-            var studentEntities = await _studentService.GetAllAsync();
-            Students = studentEntities.Select(s => new StudentViewModel
+            var students = await _studentService.GetAllAsync();
+            Students = students.Select(s => new StudentViewModel
             {
-                Id = s.Id,
                 Name = s.Name,
                 Email = s.Email,
                 Document = s.Document
-            }).ToList();
-            // Students = _mapper.Map<IEnumerable<StudentViewModel>>(studentEntities);
+            });
         }
     }
 }

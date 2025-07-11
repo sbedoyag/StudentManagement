@@ -29,9 +29,9 @@ namespace StudentManagement.Web.Services
             //});
         }
 
-        public async Task<Student?> GetStudentByIdAsync(int id)
+        public async Task<Student?> GetByDocumentAsync(string document)
         {
-            return await _studentRepository.GetByIdAsync(id);
+            return await _studentRepository.GetByDocumentAsync(document);
         }
 
         public async Task CreateAsync(Student student)

@@ -8,7 +8,7 @@ namespace StudentManagement.Core.Interfaces.Repositories
         Task<Student?> GetByDocumentAsync(string document);
         Task CreateAsync(Student student);
         Task UpdateAsync(Student student);
-        Task DeleteAsync(string document);
-        Task AddSubjectAsync(string document, Subject subject);
+        Task DeleteAsync(Student student);
+        //Task AddSubjectAsync(string document, Subject subject);
     }
 }

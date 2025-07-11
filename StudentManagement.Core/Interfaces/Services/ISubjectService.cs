@@ -6,5 +6,8 @@ namespace StudentManagement.Core.Interfaces.Services
     {
         Task<IEnumerable<Subject>> GetAllAsync();
         Task CreateAsync(Subject subject);
+        Task<Subject?> GetByCodeAsync(string code);
+        Task UpdateAsync(Subject subject);
+        Task DeleteAsync(Subject subject);
     }
 }

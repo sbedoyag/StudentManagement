@@ -16,17 +16,6 @@ namespace StudentManagement.Web.Services
         public async Task<IEnumerable<Student>> GetAllAsync()
         {
             return await _studentRepository.GetAllAsync();
-
-            //return students.Select(s => new StudentViewModel
-            //{
-            //    Id = s.Id,
-            //    Name = s.Name,
-            //    Subjects = s.Subjects.Select(sub => new SubjectViewModel
-            //    {
-            //        Id = sub.Id,
-            //        Name = sub.Name
-            //    }).ToList()
-            //});
         }
 
         public async Task<Student?> GetByDocumentAsync(string document)
@@ -39,9 +28,14 @@ namespace StudentManagement.Web.Services
             await _studentRepository.CreateAsync(student);
         }
 
-        //public async Task AddSubjectToStudentAsync(int studentId, Subject subject)
-        //{
-        //    await _studentRepository.AddSubjectAsync(studentId, subject);
-        //}
+        public async Task UpdateAsync(Student student)
+        {
+            await _studentRepository.UpdateAsync(student);
+        }
+
+        public async Task DeleteAsync(Student student)
+        {
+            await _studentRepository.DeleteAsync(student);
+        }
     }
 }

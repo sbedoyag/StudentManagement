@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentManagement.Core.Entities;
 using StudentManagement.Core.Interfaces.Repositories;
+using System.Reflection.Metadata;
 
 namespace StudentManagement.Infrastructure.Data
 {
@@ -21,6 +22,7 @@ namespace StudentManagement.Infrastructure.Data
         public async Task<Student?> GetByDocumentAsync(string document)
         {
             return await _context.Students
+                .AsNoTracking()
                 .Include(s => s.Subjects)
                 .FirstOrDefaultAsync(s => s.Document == document);
         }
@@ -28,26 +30,37 @@ namespace StudentManagement.Infrastructure.Data
         public async Task CreateAsync(Student student)
         {
             await _context.Students.AddAsync(student);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(string document)
+        public async Task DeleteAsync(Student student)
         {
-            throw new NotImplementedException();
+            _context.Students.Remove(student);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Student student)
+        public async Task UpdateAsync(Student student)
         {
-            throw new NotImplementedException();
+            _context.Attach(student).State = EntityState.Modified;
+            await AddSubjectAsync(student.Document, student.Subjects);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task AddSubjectAsync(string document, Subject subject)
+        public async Task AddSubjectAsync(string document, IEnumerable<StudentSubject> subjectCodes)
         {
-            var studentSubject = new StudentSubject
+            //Remove previus
+            var subjectsPrevius = _context.StudentSubjects.Where(u => u.StudentDocument == document);
+            foreach (var code in subjectsPrevius)
             {
-                StudentDocument = document,
-                SubjectCode = subject.Code
-            };
-            _context.StudentSubjects.Add(studentSubject);
+                _context.StudentSubjects.Remove(code);
+            }
+
+            //Add new
+            foreach (var code in subjectCodes)
+            {
+                _context.StudentSubjects.Add(code);
+            }
+
             await _context.SaveChangesAsync();
         }
     }

@@ -20,20 +20,27 @@ namespace StudentManagement.Infrastructure.Data
 
         public async Task<Subject?> GetByCodeAsync(string code)
         {
-            return await _context.Subjects.FirstOrDefaultAsync(u => u.Code == code);
+            return await _context.Subjects
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Code == code);
         }
 
         public async Task CreateAsync(Subject subject)
         {
             await _context.Subjects.AddAsync(subject);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Subject subject)
         {
+            _context.Attach(subject).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string code)
+        public async Task DeleteAsync(Subject subject)
         {
+            _context.Subjects.Remove(subject);
+            await _context.SaveChangesAsync();
         }
     }
 }

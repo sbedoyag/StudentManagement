@@ -22,5 +22,20 @@ namespace StudentManagement.Web.Services
         {
             await _subjectRepository.CreateAsync(subject);
         }
+
+        public async Task<Subject?> GetByCodeAsync(string code)
+        {
+            return await _subjectRepository.GetByCodeAsync(code);
+        }
+
+        public async Task UpdateAsync(Subject subject)
+        {
+            await _subjectRepository.UpdateAsync(subject);
+        }
+
+        public async Task DeleteAsync(Subject subject)
+        {
+            await _subjectRepository.DeleteAsync(subject);
+        }
     }
 }

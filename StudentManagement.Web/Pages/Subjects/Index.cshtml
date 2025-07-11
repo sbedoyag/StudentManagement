@@ -1,0 +1,37 @@
+﻿@page
+@model StudentManagement.Web.Pages.Subjects.IndexModel
+
+@{
+    ViewData["Title"] = "Materias";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">Crear</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr><th>Nombre</th><th>Créditos</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Subjects) 
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credits)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-code="@item.Code">Editar</a> |
+                    <a asp-page="./Details" asp-route-code="@item.Code">Detalle</a> |
+                    <a asp-page="./Delete" asp-route-code="@item.Code">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

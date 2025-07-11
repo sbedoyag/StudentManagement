@@ -15,70 +15,60 @@ namespace StudentManagement.Infrastructure.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Document = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Document = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Students", x => x.Document);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Subjects",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Credits = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.PrimaryKey("PK_Subjects", x => x.Code);
                 });
 
             migrationBuilder.CreateTable(
                 name: "StudentSubjects",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentDocument = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SubjectCode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentSubjects", x => x.Id);
+                    table.PrimaryKey("PK_StudentSubjects", x => new { x.StudentDocument, x.SubjectCode });
                     table.ForeignKey(
-                        name: "FK_StudentSubjects_Students_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_StudentSubjects_Students_StudentDocument",
+                        column: x => x.StudentDocument,
                         principalTable: "Students",
-                        principalColumn: "Id",
+                        principalColumn: "Document",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_StudentSubjects_Subjects_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_StudentSubjects_Subjects_SubjectCode",
+                        column: x => x.SubjectCode,
                         principalTable: "Subjects",
-                        principalColumn: "Id",
+                        principalColumn: "Code",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentSubjects_StudentId",
+                name: "IX_StudentSubjects_SubjectCode",
                 table: "StudentSubjects",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentSubjects_SubjectId",
-                table: "StudentSubjects",
-                column: "SubjectId");
+                column: "SubjectCode");
         }
 
         /// <inheritdoc />

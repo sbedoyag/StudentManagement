@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using StudentManagement.Core.Entities;
 using StudentManagement.Core.Interfaces.Repositories;
 using StudentManagement.Core.Interfaces.Services;
 using StudentManagement.Infrastructure.Data;
+using StudentManagement.Web.Mapping;
 using StudentManagement.Web.Services;
+using StudentManagement.Web.Services.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +26,15 @@ builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
+
+builder.Services.AddAutoMapper(mapper =>
+{
+    mapper.CreateMap<Student, StudentViewModel>();
+    mapper.CreateMap<Subject, SubjectViewModel>();
+    
+    mapper.CreateMap<SubjectViewModel, Subject>();
+    mapper.CreateMap<StudentViewModel, Student>();
+});
 
 var app = builder.Build();
 

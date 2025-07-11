@@ -2,21 +2,37 @@
 @model StudentManagement.Web.Pages.Students.IndexModel
 @{
     ViewData["Title"] = "Estudiantes";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
 
+<p>
+    <a asp-page="Create">Crear</a>
+</p>
+
 <table class="table">
     <thead>
-        <tr><th>Nombre</th><th>Correo</th><th>Documento</th></tr>
+        <tr><th>Documento</th><th>Nombre</th><th>Correo</th></tr>
     </thead>
     <tbody>
-        @foreach (var student in Model.Students)
+        @foreach (var item in Model.Students)
         {
             <tr>
-                <td>@student.Name</td>
-                <td>@student.Email</td>
-                <td>@student.Document</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Document)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-document="@item.Document">Editar</a> |
+                    <a asp-page="./Details" asp-route-document="@item.Document">Detalle</a> |
+                    <a asp-page="./Delete" asp-route-document="@item.Document">Eliminar</a>
+                </td>
             </tr>
         }
     </tbody>

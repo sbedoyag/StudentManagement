@@ -8,6 +8,6 @@ namespace StudentManagement.Core.Interfaces.Repositories
         Task<Subject?> GetByCodeAsync(string code);
         Task CreateAsync(Subject subject);
         Task UpdateAsync(Subject subject);
-        Task DeleteAsync(string code);
+        Task DeleteAsync(Subject subject);
     }
 }

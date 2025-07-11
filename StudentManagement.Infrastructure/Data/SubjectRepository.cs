@@ -18,9 +18,9 @@ namespace StudentManagement.Infrastructure.Data
             return await _context.Subjects.ToListAsync();
         }
 
-        public async Task<Subject?> GetByIdAsync(int id)
+        public async Task<Subject?> GetByCodeAsync(string code)
         {
-            return await _context.Subjects.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Subjects.FirstOrDefaultAsync(u => u.Code == code);
         }
 
         public async Task CreateAsync(Subject subject)
@@ -32,7 +32,7 @@ namespace StudentManagement.Infrastructure.Data
         {
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(string code)
         {
         }
     }

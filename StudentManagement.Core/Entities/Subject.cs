@@ -1,8 +1,11 @@
-﻿namespace StudentManagement.Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StudentManagement.Core.Entities
 {
     public class Subject
     {
-        public int Id { get; set; }
+
+        [Key]
         public string Code { get; set; }
         public string Name { get; set; }
         public int Credits { get; set; }

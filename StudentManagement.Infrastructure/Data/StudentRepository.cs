@@ -18,11 +18,11 @@ namespace StudentManagement.Infrastructure.Data
             return await _context.Students.ToListAsync();
         }
 
-        public async Task<Student?> GetByIdAsync(int id)
+        public async Task<Student?> GetByDocumentAsync(string document)
         {
             return await _context.Students
                 .Include(s => s.Subjects)
-                .FirstOrDefaultAsync(s => s.Id == id);
+                .FirstOrDefaultAsync(s => s.Document == document);
         }
 
         public async Task CreateAsync(Student student)
@@ -30,7 +30,7 @@ namespace StudentManagement.Infrastructure.Data
             await _context.Students.AddAsync(student);
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(string document)
         {
             throw new NotImplementedException();
         }
@@ -40,12 +40,12 @@ namespace StudentManagement.Infrastructure.Data
             throw new NotImplementedException();
         }
 
-        public async Task AddSubjectAsync(int studentId, Subject subject)
+        public async Task AddSubjectAsync(string document, Subject subject)
         {
             var studentSubject = new StudentSubject
             {
-                StudentId = studentId,
-                SubjectId = subject.Id
+                StudentDocument = document,
+                SubjectCode = subject.Code
             };
             _context.StudentSubjects.Add(studentSubject);
             await _context.SaveChangesAsync();
